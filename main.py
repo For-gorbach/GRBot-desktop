@@ -2,7 +2,7 @@
 from pyrogram import Client, filters  # библиотека для работы с юзерботом
 from time import sleep  # библиотека для создания задержки
 import eel  # библиотека для создания веб интерфейса
-import asyncio
+import asyncio  # библиотека для асинхронности
 
 @eel.expose  # подключаем функцию к модулю eel
 def text(text, chats, api_id, api_hash):  # функция
