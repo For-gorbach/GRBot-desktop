@@ -12,9 +12,7 @@
 
     <textarea placeholder="Введите текст!" class="input" id="text"></textarea>
     <br>
-    <textarea placeholder="Введите id чатов! (через пробел и enter)" class="input" id="chats"></textarea>
-    <br>
-    <input type="number" class="input" placeholder="Укажите время ожидания (в секундах)" id="time">
+    <textarea placeholder="Введите id чатов через запятую. (через синтаксис 'id: time, id2: time2' (без ковычек), время в секах)" class="input" id="chats"></textarea>
     <br>
     <input class="input" placeholder="Укажите api id" id="api_id">
     <br>
@@ -25,15 +23,14 @@
 
     <script type="text/javascript">
         async function message(){
+            document.getElementById("submit").innerHTML = "Если это первый запуск впишите номер телефона и пришедший токен в терминал (его если чА закрывать незя)";
+
             let text = document.getElementById("text").value;
             let chats = document.getElementById("chats").value;
-            let time = document.getElementById("time").value;
             let api_id = document.getElementById("api_id").value;
             let api_hash = document.getElementById("api_hash").value;
 
-            let res = await eel.text(text, chats, time, api_id, api_hash)();
-
-            document.getElementById("submit").innerHTML = "Если это первый запуск впишите номер телефона и пришедший токен в терминал (его если чА закрывать незя)";
+            let res = await eel.text(text, chats, api_id, api_hash)();
         }
     </script>
 
