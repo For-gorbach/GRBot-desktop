@@ -6,7 +6,7 @@ import asyncio  # библиотека для асинхронности
 
 @eel.expose  # подключаем функцию к модулю eel
 def text(text, chats, api_id, api_hash):  # функция
-    try:
+    try:  # проверяем на появление ошибки
         groups_id = eval("{"+chats+"}")  # превращаем переданную информацию в словарь (например если передан текст "100: 30" то мы добавляем скобки и получаем "{100: 30}" а при помощи eval ``убираем`` ковычки превращая текст в словарь
 
         print(f"Кол-во групп - {len(groups_id)}")  # пишем кол-во групп
@@ -24,8 +24,8 @@ def text(text, chats, api_id, api_hash):  # функция
                 await asyncio.gather(*[send(app, id, time) for id, time in groups_id.items()])  # через цикл берем айди и время и передаем их в send вместе с юзером, asyncio.gather что бы это были независимые циклы
 
         asyncio.run(main())  # запускаем асинхронную функцию
-    except Exception as ex:
-        print(ex)
+    except Exception as ex:  # ловим ошибку и вписываем её как ex
+        print(ex)  # пишем ошибку
 
 eel.init("web")  # инициализируем проект в папке web
 eel.start("index.html", size=(1000, 800))  # запускаем index.html в окне с размером 1000 на 800
