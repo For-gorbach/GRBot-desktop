@@ -6,12 +6,16 @@ import asyncio  # библиотека для асинхронности
 
 @eel.expose  # подключаем функцию к модулю eel
 def text(text, chats, api_id, api_hash):  # функция
-    try:  # проверяем на появление ошибки
+    try:
         groups_id = eval("{"+chats+"}")  # превращаем переданную информацию в словарь (например если передан текст "100: 30" то мы добавляем скобки и получаем "{100: 30}" а при помощи eval ``убираем`` ковычки превращая текст в словарь
 
-        print(f"Кол-во групп - {len(groups_id)}")  # пишем кол-во групп
+        print(f"Кол-во групп - {len(groups_id)}")
 
         app = Client("my_account", api_id=api_id, api_hash=api_hash)  # записываем в переменную app то что юзербот будет выполнять все действия от имени юзера, а так же передаем api_id и api_hash которые мы объявили в файле settings.py
+
+        async def tunnel(app, id, time):  # "переходная" функция
+            sleep(0.1)  # засыпание программы (основное нововведение)
+            await send(app, id, time)  # отправка данных в функцию
 
         async def send(app, id, time):  # функция отправки в которую передаем app (юзера), айди и время
             while True:  # вечный цикл
@@ -21,11 +25,11 @@ def text(text, chats, api_id, api_hash):  # функция
 
         async def main():  # асинхронная функция
             async with app:  # начинаем работу с юзером
-                await asyncio.gather(*[send(app, id, time) for id, time in groups_id.items()])  # через цикл берем айди и время и передаем их в send вместе с юзером, asyncio.gather что бы это были независимые циклы
+                await asyncio.gather(*[tunnel(app, id, time) for id, time in groups_id.items()])  # через цикл берем айди и время и передаем их в send вместе с юзером, asyncio.gather что бы это были независимые циклы
 
         asyncio.run(main())  # запускаем асинхронную функцию
-    except Exception as ex:  # ловим ошибку и вписываем её как ex
-        print(ex)  # пишем ошибку
+    except Exception as ex:
+        print(ex)
 
 eel.init("web")  # инициализируем проект в папке web
 eel.start("index.html", size=(1000, 800))  # запускаем index.html в окне с размером 1000 на 800
