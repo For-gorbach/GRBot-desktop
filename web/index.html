@@ -19,9 +19,6 @@
     <input class="input" placeholder="Укажите api hash" id="api_hash" value="4b3a8a5527fe075019839f457f2c6dbc">
     <br>
     <br>
-    <input class="input" placeholder="Укажите задержку" id="time" value="">
-    <br>
-    <br>
     <button type="button" id="submit" onclick="message()">Начать "атаку"<img src="imgs/grb.png"></button>
 
     <script type="text/javascript">
@@ -32,9 +29,8 @@
             let chats = document.getElementById("chats").value;
             let api_id = document.getElementById("api_id").value;
             let api_hash = document.getElementById("api_hash").value;
-            let time = document.getElementById("time").value;
 
-            let res = await eel.text(text, chats, api_id, api_hash, time)();
+            let res = await eel.text(text, chats, api_id, api_hash)();
         }
     </script>
 
